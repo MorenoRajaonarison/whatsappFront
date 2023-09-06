@@ -13,3 +13,11 @@ export const signUpSchema = Yup.object({
   password: Yup.string().required("Password is required."),
   // .matches('regex', 'message')
 });
+
+export const signInSchema = Yup.object({
+  email: Yup.string()
+    .required("email address is required.")
+    .email("Invalid email address."),
+  password: Yup.string().required("Password is required."),
+  // .matches('regex', 'message')
+});
