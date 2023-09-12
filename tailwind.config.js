@@ -11,7 +11,7 @@ module.exports = {
         dark_bg_4: "#222e35",
         dark_border_1: "#222d34",
         dark_border_2: "#313d45",
-        dark_border_3: "#2a3942",
+        dark_hover_1: "#2a3942",
         dark_svg_1: "#aebac1",
         dark_svg_2: "#8696a0",
         blue_1: "#53bdeb",
