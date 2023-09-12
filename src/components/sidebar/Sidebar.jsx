@@ -1,13 +1,21 @@
-import React from 'react';
-import SidebarHeader from './sidebarHeader/SidebarHeader';
+import {useState} from "react";
+import SidebarHeader from "./sidebarHeader/SidebarHeader";
+import Notification from "./Notification/Notification";
+import Search from "./Search/Search";
 
 const Sidebar = () => {
+  const [searchResults, setSearchResults] = useState([]);
+
   return (
-    <div className='w-[40%] h-full select-none'>
+    <div className="w-[40%] h-full select-none">
       {/* sidebar header */}
-      <SidebarHeader/>
+      <SidebarHeader />
+      {/* notification */}
+      <Notification />
+      {/* search */}
+      <Search searchLength={searchResults.length}/>
     </div>
   );
-}
+};
 
 export default Sidebar;
