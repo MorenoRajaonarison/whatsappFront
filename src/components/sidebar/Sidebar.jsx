@@ -8,7 +8,6 @@ import SearchResultConversation from "./Search/SearchResultConversation";
 
 const Sidebar = () => {
   const [searchResults, setSearchResults] = useState([]);
-  console.log(searchResults);
   return (
     <div className="w-[40%] h-full select-none">
       {/* sidebar header */}
