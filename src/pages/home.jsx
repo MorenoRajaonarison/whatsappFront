@@ -15,9 +15,9 @@ function Home() {
   }, [user]);
 
   return (
-    <div className="min-h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden">
+    <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden">
       {/* container */}
-      <div className="container min-h-screen flex w-full">
+      <div className="container h-screen flex w-full">
         {/* Sidebar */}
         <Sidebar />
       </div>
