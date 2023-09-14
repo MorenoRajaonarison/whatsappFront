@@ -1,4 +1,4 @@
-import { dateHandler } from "../../../utils/data";
+import { dateHandler } from "../../../utils/date";
 
 const Conversation = ({ convo }) => {
   return (

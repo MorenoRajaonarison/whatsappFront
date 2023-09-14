@@ -9,7 +9,7 @@ export const dateHandler = (date) => {
   const getDay = () => {
     let days = time.split(" ")[0];
     if(Number(days)<8) {
-      return now.substract(Number(days, "days")).format("dddd")
+      return now.subtract(Number(days, "days")).format("dddd")
     } else {
       return momentDate.format("DD/MM/YYY")
     }
