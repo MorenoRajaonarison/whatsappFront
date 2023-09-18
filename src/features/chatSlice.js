@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 const CONVERSATION_ENDPOINT = `${process.env.REACT_APP_API_ENDPOINT}/conversation`;
+const MESSAGE_ENDPOINT = `${process.env.REACT_APP_API_ENDPOINT}/message`;
 
 const initialState = {
   status: "",
@@ -9,6 +10,7 @@ const initialState = {
   conversations: [],
   activeConversation: {},
   notifications: [],
+  messages: []
 };
 
 export const getConversations = createAsyncThunk(
@@ -35,6 +37,26 @@ export const openCreateConversation = createAsyncThunk(
       const { data } = await axios.post(
         CONVERSATION_ENDPOINT,
         { receiverId },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error.message);
+    }
+  }
+);
+
+export const getConversationMessages = createAsyncThunk(
+  "conversation/messages",
+  async (values, { rejectWithValue }) => {
+    const { token, convoId } = values;
+    try {
+      const { data } = await axios.get(
+        `${MESSAGE_ENDPOINT}/${convoId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -77,6 +99,17 @@ export const chatSlice = createSlice({
         state.activeConversation = action.payload;
       })
       .addCase(openCreateConversation.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
+      .addCase(getConversationMessages.pending, (state, action) => {
+        state.status = "loading";
+      })
+      .addCase(getConversationMessages.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.messages = action.payload;
+      })
+      .addCase(getConversationMessages.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.payload;
       });
