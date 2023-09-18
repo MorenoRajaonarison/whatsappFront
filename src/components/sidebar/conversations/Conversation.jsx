@@ -1,8 +1,24 @@
+import { openCreateConversation } from "../../../features/chatSlice";
+import { getConversationId } from "../../../utils/chat";
 import { dateHandler } from "../../../utils/date";
+import { useDispatch, useSelector } from "react-redux";
 
 const Conversation = ({ convo }) => {
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
+  const values = {
+    receiverId: getConversationId(user, convo.users),
+    token: user.access_token,
+  };
+  const openConversation = () => {
+    dispatch(openCreateConversation(values));
+  };
+
   return (
-    <li className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]">
+    <li
+      onClick={() => openConversation()}
+      className="list-none h-[72px] w-full dark:bg-dark_bg_1 hover:dark:bg-dark_bg_2 cursor-pointer dark:text-dark_text_1 px-[10px]"
+    >
       {/* container */}
       <div className="relative w-full flex items-center justify-between py-[10px]">
         {/* left */}
@@ -23,7 +39,11 @@ const Conversation = ({ convo }) => {
             <div>
               <div className="flex items-center gap-x-1 dark:text-dark_text_2">
                 <div className="flex-1 items-center gap-x-1 dark:text-dark_text_2">
-                  <p>{convo.latestMessage?.message}</p>
+                  <p>
+                    {convo.latestMessage?.message.length > 20
+                      ? `${convo.latestMessage?.message.substring(0, 25)}...`
+                      : convo.latestMessage?.message}
+                  </p>
                 </div>
               </div>
             </div>
@@ -32,7 +52,9 @@ const Conversation = ({ convo }) => {
         {/* right */}
         <div className="flex flex-column gap-y-4 items-end text-xs">
           <span className="dark:text-dark_text_2">
-            {dateHandler(convo.latestMessage?.createdAt)}
+            {convo.latestMessage?.createdAt
+              ? dateHandler(convo.latestMessage?.createdAt)
+              : ""}
           </span>
         </div>
       </div>
