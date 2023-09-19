@@ -5,7 +5,6 @@ import Search from "./Search/Search";
 import Conversations from "./conversations/Conversations";
 import SearchResultConversation from "./Search/SearchResultConversation";
 
-
 const Sidebar = () => {
   const [searchResults, setSearchResults] = useState([]);
   return (
@@ -22,7 +21,10 @@ const Sidebar = () => {
 
       {/* conversations */}
       {searchResults.length > 0 ? (
-        <SearchResultConversation searchResults={searchResults} />
+        <SearchResultConversation
+          searchResults={searchResults}
+          setSearchResults={setSearchResults}
+        />
       ) : (
         <Conversations />
       )}
