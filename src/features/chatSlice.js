@@ -137,15 +137,16 @@ export const chatSlice = createSlice({
       .addCase(sendMessage.fulfilled, (state, action) => {
         state.status = "succeeded";
         state.messages = [...state.messages, action.payload];
-        let conversation = {
-          ...action.payload.conversation,
-          latestMessage: action.payload,
-        };
-        let newConvos = [...state.conversations].filter(
-          (c) => c._id !== conversation._id
+
+        // Find the conversation in the state that matches the conversation of the new message
+        let conversation = state.conversations.find(
+          (c) => c._id === action.payload.conversation._id
         );
-        newConvos.unshift(conversation);
-        state.conversations = newConvos;
+
+        // If the conversation is found, update its latestMessage property
+        if (conversation) {
+          conversation.latestMessage = action.payload;
+        }
       })
       .addCase(sendMessage.rejected, (state, action) => {
         state.status = "failed";
