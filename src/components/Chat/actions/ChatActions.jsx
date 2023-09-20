@@ -2,9 +2,9 @@ import { ClipLoader } from "react-spinners";
 import { sendMessage } from "../../../features/chatSlice";
 import { SendIcon } from "../../../svg";
 import Attachement from "./Attachement";
-import EmojiPicker from "./EmojiPicker";
+import EmojiPickerApp from "./EmojiPicker";
 import Input from "./Input";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const ChatActions = () => {
@@ -12,6 +12,7 @@ const ChatActions = () => {
   const [message, setMessage] = useState("");
   const { activeConversation, status } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
+  const textRef = useRef();
   const values = {
     message,
     convoId: activeConversation._id,
@@ -32,11 +33,15 @@ const ChatActions = () => {
       {/* container */}
       <div className="w-full flex items-center gap-x-2">
         <ul className="flex gap-x-2">
-          <EmojiPicker />
+          <EmojiPickerApp
+            message={message}
+            setMessage={setMessage}
+            textRef={textRef}
+          />
           <Attachement />
         </ul>
         {/* input */}
-        <Input message={message} setMessage={setMessage} />
+        <Input message={message} setMessage={setMessage} textRef={textRef} />
         {/* sendBtn */}
         <button type="submit" className="btn">
           {status === "loading" ? (
