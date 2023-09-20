@@ -8,7 +8,7 @@ import ChatContainer from "../components/Chat/ChatContainer";
 function Home() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
-  const {activeConversation} = useSelector(state => state.chat)
+  const { activeConversation } = useSelector((state) => state.chat);
 
   // get conversations
   useEffect(() => {
@@ -18,14 +18,12 @@ function Home() {
   }, [user]);
 
   return (
-    <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center py-[19px] overflow-hidden">
+    <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center  overflow-hidden">
       {/* container */}
-      <div className="container h -screen flex w-full">
+      <div className="container h-screen flex w-full pt-[19px]">
         {/* Sidebar */}
         <Sidebar />
-        {
-          activeConversation._id? <ChatContainer/>: <WhatsappHome/>
-        }
+        {activeConversation._id ? <ChatContainer /> : <WhatsappHome />}
       </div>
     </div>
   );
