@@ -3,17 +3,20 @@ import { getConversationId } from "../../../utils/chat";
 import { dateHandler } from "../../../utils/date";
 import { useDispatch, useSelector } from "react-redux";
 import { capitalize } from "../../../utils/string";
+import { useSocket } from "../../../context/socketContext";
 
 const Conversation = ({ convo }) => {
   const dispatch = useDispatch();
+  const socket = useSocket();
   const { user } = useSelector((state) => state.user);
   const { activeConversation } = useSelector((state) => state.chat);
   const values = {
     receiverId: getConversationId(user, convo.users),
     token: user.access_token,
   };
-  const openConversation = () => {
-    dispatch(openCreateConversation(values));
+  const openConversation = async () => {
+    let newConvo = await dispatch(openCreateConversation(values));
+    if (socket) socket.emit("joinConversation", newConvo.payload._id);
   };
 
   return (

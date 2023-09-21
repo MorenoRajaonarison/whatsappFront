@@ -4,16 +4,19 @@ import { useDispatch, useSelector } from "react-redux";
 import { getConversations } from "../features/chatSlice";
 import WhatsappHome from "../components/Chat/Welcome/WhatsappHome";
 import ChatContainer from "../components/Chat/ChatContainer";
+import { useSocket } from "../context/socketContext";
 
 function Home() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
+  const socket = useSocket();
   const { activeConversation } = useSelector((state) => state.chat);
 
-  // get conversations
+  // get conversations and join user into socket
   useEffect(() => {
     if (user?.access_token) {
       dispatch(getConversations(user?.access_token));
+      if (socket) socket.emit("join", user._id);
     }
   }, [user]);
 
