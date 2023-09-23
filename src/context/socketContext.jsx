@@ -8,20 +8,21 @@ export const useSocket = () => {
 };
 
 export const SocketProvider = ({ children, serverUrl }) => {
-
-  const [socket, setSocket] = useState();
+  const [socket, setSocket] = useState(null);
+  const [isSocketReady, setIsSocketReady] = useState(false);
 
   useEffect(() => {
-    // Initialisation du socket
     const newSocket = io(serverUrl);
     console.log("Socket initialized:", newSocket);
     setSocket(newSocket);
+    setIsSocketReady(true);
 
-    // Fermeture de la connexion lorsque le composant est démonté
     return () => newSocket.close();
   }, [serverUrl]);
 
   return (
-    <SocketContext.Provider value={socket}>{children}</SocketContext.Provider>
+    <SocketContext.Provider value={socket}>
+      {isSocketReady && children}
+    </SocketContext.Provider>
   );
 };
