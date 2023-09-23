@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import Conversation from "./Conversation";
 
 const Conversations = () => {
-  const { conversations, activeConversation } = useSelector((state) => state.chat);
-
+  const { conversations, activeConversation } = useSelector(
+    (state) => state.chat
+  );
   return (
     <div className="convos scrollbar">
       <ul>

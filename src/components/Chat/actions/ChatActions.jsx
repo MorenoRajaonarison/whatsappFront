@@ -6,13 +6,15 @@ import EmojiPickerApp from "./EmojiPicker";
 import Input from "./Input";
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useSocket } from "../../../context/socketContext";
 
 const ChatActions = () => {
   const dispatch = useDispatch();
+  const socket = useSocket();
   const [message, setMessage] = useState("");
   const [showPicker, setShowPicker] = useState(false);
   const [showAttachment, setShowAttachment] = useState(false);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const { activeConversation, status } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const textRef = useRef();
@@ -24,10 +26,11 @@ const ChatActions = () => {
   };
   const sendMessageHandler = async (e) => {
     e.preventDefault();
-    setLoading(true)
-    await dispatch(sendMessage(values));
+    setLoading(true);
+    let newMsg = await dispatch(sendMessage(values));
+    if(socket) socket.emit("sendMessage", newMsg.payload)
     setMessage("");
-    setLoading(false)
+    setLoading(false);
   };
 
   return (
@@ -46,7 +49,11 @@ const ChatActions = () => {
             setShowAttachment={setShowAttachment}
             textRef={textRef}
           />
-          <Attachement showAttachment={showAttachment} setShowAttachment={setShowAttachment} setShowPicker={setShowPicker}/>
+          <Attachement
+            showAttachment={showAttachment}
+            setShowAttachment={setShowAttachment}
+            setShowPicker={setShowPicker}
+          />
         </ul>
         {/* input */}
         <Input message={message} setMessage={setMessage} textRef={textRef} />

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Sidebar from "../components/sidebar/Sidebar";
 import { useDispatch, useSelector } from "react-redux";
-import { getConversations } from "../features/chatSlice";
+import { getConversations, updateMessages } from "../features/chatSlice";
 import WhatsappHome from "../components/Chat/Welcome/WhatsappHome";
 import ChatContainer from "../components/Chat/ChatContainer";
 import { useSocket } from "../context/socketContext";
@@ -19,6 +19,14 @@ function Home() {
       if (socket) socket.emit("join", user._id);
     }
   }, [user]);
+
+  // listening to receive message
+
+  useEffect(() => {
+    socket.on("messageReceived", (message) => {
+      dispatch(updateMessages(message));
+    });
+  }, []);
 
   return (
     <div className="h-screen dark:bg-dark_bg_1 flex items-center justify-center  overflow-hidden">
