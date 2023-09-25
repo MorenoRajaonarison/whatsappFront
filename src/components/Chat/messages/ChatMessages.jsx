@@ -1,15 +1,16 @@
 import { useSelector } from "react-redux";
 import { useRef, useEffect } from "react";
 import Message from "./Message";
+import Typing from './Typing'
 
-const ChatMessages = () => {
-  const { messages } = useSelector((state) => state.chat);
+const ChatMessages = ({ typing }) => {
+  const { messages, activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
-  const endRef = useRef()
+  const endRef = useRef();
 
   useEffect(() => {
-    endRef.current.scrollIntoView({behavior: "smooth"})
-  }, [messages])
+    endRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   return (
     <div className="mb-[60px] bg-[url('https://res.cloudinary.com/dmhcnhtng/image/upload/v1677358270/Untitled-1_copy_rpx8yb.jpg')] bg-cover bg-no-repeat">
@@ -24,6 +25,7 @@ const ChatMessages = () => {
               me={user._id === msg.sender._id}
             />
           ))}
+        {typing === activeConversation._id && <Typing/>}
         <div ref={endRef}></div>
       </div>
     </div>
