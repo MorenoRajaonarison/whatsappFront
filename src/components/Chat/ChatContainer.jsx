@@ -3,9 +3,10 @@ import { useEffect } from "react";
 import ChatHeader from "./header/chatHeader";
 import ChatMessages from "./messages/ChatMessages";
 import { getConversationMessages } from "../../features/chatSlice";
-import ChatActions from "./actions/ChatActions";
+import ChatActions from "./actions/ChatActions"
+import { checkOnlineStatus } from "../../utils/chat";
 
-const ChatContainer = () => {
+const ChatContainer = ({onlineUsers}) => {
   const dispatch = useDispatch();
   const { activeConversation, messages } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
@@ -23,7 +24,7 @@ const ChatContainer = () => {
       {/* container */}
       <div className="">
         {/* header */}
-        <ChatHeader />
+        <ChatHeader online={checkOnlineStatus(onlineUsers, user, activeConversation.users)} />
         {/* messages */}
         <ChatMessages />
         {/* chat actions */}

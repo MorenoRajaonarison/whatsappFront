@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { capitalize } from "../../../utils/string";
 import { useSocket } from "../../../context/socketContext";
 
-const Conversation = ({ convo }) => {
+const Conversation = ({ convo, online }) => {
   const dispatch = useDispatch();
   const socket = useSocket();
   const { user } = useSelector((state) => state.user);
@@ -37,7 +37,11 @@ const Conversation = ({ convo }) => {
         {/* left */}
         <div className="flex items-center gap-x-3">
           {/* picture */}
-          <div className="relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden">
+          <div
+            className={`relative min-w-[50px] max-w-[50px] h-[50px] rounded-full overflow-hidden ${
+              online ? "online" : ""
+            }`}
+          >
             <img
               src={getConversationPicture(user, convo.users)}
               alt="conversation"
