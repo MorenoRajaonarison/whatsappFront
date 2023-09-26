@@ -1,4 +1,5 @@
-import { CameraIcon, ContactIcon, DocumentIcon, PhotoIcon, PollIcon, StickerIcon } from "../../../../svg";
+import { CameraIcon, ContactIcon, DocumentIcon, PhotoIcon, PollIcon, StickerIcon } from "../../../../../svg";
+import PhotoAttach from "./PhotoAttach";
 
 const Menu = () => {
 
@@ -29,11 +30,7 @@ const Menu = () => {
           <StickerIcon />
         </button>
       </li>
-      <li>
-        <button type="button" className="bg-[#bf59cf] rounded-full">
-          <PhotoIcon />
-        </button>
-      </li>
+      <PhotoAttach/>
     </ul>
   );
 };

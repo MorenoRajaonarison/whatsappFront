@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { AttachmentIcon } from "../../../../svg";
-import Menu from "./Menu";
+import Menu from "./Menu/Menu";
 
 const Attachement = ({ setShowAttachment, showAttachment, setShowPicker }) => {
   const [show, setShow] = useState(false);
