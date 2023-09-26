@@ -1,37 +1,41 @@
 import { useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { PhotoIcon } from "../../../../../svg";
 import { addFiles } from "../../../../../features/chatSlice";
 
-const MAX_IMAGE_SIZE = 1024 * 1024 * 5; // 5MB
-const ALLOWED_IMAGE_TYPES = [
+const MAX_MEDIA_SIZE = 1024 * 1024 * 5; // 5MB
+const ALLOWED_MEDIA_TYPES = [
   "image/png",
   "image/jpeg",
   "image/gif",
   "image/webp",
+  "video/mp4",
+  "video/mpg",
+  "video/webm",
 ];
 
 const PhotoAttach = () => {
-  const { files } = useSelector((state) => state.chat);
-  console.log(files);
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
-  const isValidImage = (img) => {
-    return ALLOWED_IMAGE_TYPES.includes(img.type) && img.size <= MAX_IMAGE_SIZE;
+  const isValidMedia = (media) => {
+    return (
+      ALLOWED_MEDIA_TYPES.includes(media.type) && media.size <= MAX_MEDIA_SIZE
+    );
   };
 
-  const handleFileRead = (img, result) => {
-    dispatch(addFiles({ file: img, imgData: result, type: "image" }));
+  const handleMediaRead = (media, result) => {
+    const mediaType = media.type.startsWith("image/") ? "image" : "video";
+    dispatch(addFiles({ file: media, mediaData: result, type: mediaType }));
   };
 
-  const imageHandler = (e) => {
-    const files = [...e.target.files].filter(isValidImage);
+  const mediaHandler = (e) => {
+    const selectedMedia = [...e.target.files].filter(isValidMedia);
 
-    files.forEach((img) => {
+    selectedMedia.forEach((media) => {
       const reader = new FileReader();
-      reader.readAsDataURL(img);
-      reader.onload = (e) => handleFileRead(img, e.target.result);
+      reader.readAsDataURL(media);
+      reader.onload = (e) => handleMediaRead(media, e.target.result);
     });
   };
 
@@ -48,8 +52,8 @@ const PhotoAttach = () => {
         type="file"
         hidden
         ref={inputRef}
-        accept={ALLOWED_IMAGE_TYPES.join(", ")}
-        onChange={imageHandler}
+        accept={ALLOWED_MEDIA_TYPES.join(", ")}
+        onChange={mediaHandler}
       />
     </li>
   );

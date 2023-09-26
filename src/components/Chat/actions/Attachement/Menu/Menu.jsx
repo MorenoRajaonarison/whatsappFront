@@ -1,4 +1,4 @@
-import { CameraIcon, ContactIcon, DocumentIcon, PhotoIcon, PollIcon, StickerIcon } from "../../../../../svg";
+import { CameraIcon, ContactIcon, DocumentIcon,  PollIcon, StickerIcon } from "../../../../../svg";
 import PhotoAttach from "./PhotoAttach";
 
 const Menu = () => {
