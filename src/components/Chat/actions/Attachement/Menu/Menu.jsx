@@ -1,8 +1,13 @@
-import { CameraIcon, ContactIcon, DocumentIcon,  PollIcon, StickerIcon } from "../../../../../svg";
+import {
+  CameraIcon,
+  ContactIcon,
+  PollIcon,
+  StickerIcon,
+} from "../../../../../svg";
+import DocAttach from "./DocAttach";
 import PhotoAttach from "./PhotoAttach";
 
 const Menu = () => {
-
   return (
     <ul className="absolute bottom-14 openEmojiAnimation">
       <li>
@@ -15,11 +20,7 @@ const Menu = () => {
           <ContactIcon />
         </button>
       </li>
-      <li>
-        <button type="button" className="bg-[#5f66cd] rounded-full">
-          <DocumentIcon />
-        </button>
-      </li>
+      <DocAttach />
       <li>
         <button type="button" className="bg-[#d3396d] rounded-full">
           <CameraIcon />
@@ -30,7 +31,7 @@ const Menu = () => {
           <StickerIcon />
         </button>
       </li>
-      <PhotoAttach/>
+      <PhotoAttach />
     </ul>
   );
 };
