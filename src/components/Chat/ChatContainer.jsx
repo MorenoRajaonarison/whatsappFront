@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import ChatHeader from "./header/chatHeader";
 import ChatMessages from "./messages/ChatMessages";
 import { getConversationMessages } from "../../features/chatSlice";
-import ChatActions from "./actions/ChatActions"
+import ChatActions from "./actions/ChatActions";
 import { checkOnlineStatus } from "../../utils/chat";
+import FilePreview from "./preview/files/FilePreview";
 
-const ChatContainer = ({onlineUsers, typing}) => {
+const ChatContainer = ({ onlineUsers, typing }) => {
   const dispatch = useDispatch();
-  const { activeConversation, messages } = useSelector((state) => state.chat);
+  const { activeConversation, files } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const values = {
     token: user.access_token,
@@ -24,11 +25,23 @@ const ChatContainer = ({onlineUsers, typing}) => {
       {/* container */}
       <div className="">
         {/* header */}
-        <ChatHeader online={checkOnlineStatus(onlineUsers, user, activeConversation.users)} />
-        {/* messages */}
-        <ChatMessages typing={typing}/>
-        {/* chat actions */}
-        <ChatActions />
+        <ChatHeader
+          online={checkOnlineStatus(
+            onlineUsers,
+            user,
+            activeConversation.users
+          )}
+        />
+        {files.length > 0 ? (
+          <FilePreview />
+        ) : (
+          <>
+            {/* messages */}
+            <ChatMessages typing={typing} />
+            {/* chat actions */}
+            <ChatActions />
+          </>
+        )}
       </div>
     </div>
   );
