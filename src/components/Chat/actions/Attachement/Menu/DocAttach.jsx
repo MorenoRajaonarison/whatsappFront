@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { DocumentIcon} from "../../../../../svg";
 import { addFiles } from "../../../../../features/chatSlice";
+import { filesType } from "../../../../../utils/filesType";
 
 const MAX_DOC_SIZE = 1024 * 1024 * 10; // 10MB
 const ALLOWED_DOC_TYPES = [
@@ -23,7 +24,7 @@ const DocAttach = () => {
   };
 
   const handleDocRead = (doc, result) => {
-    dispatch(addFiles({ file: doc, docData: result, type: doc.type }));
+    dispatch(addFiles({ file: doc, docData: result, type: filesType(doc) }));
   };
 
   const docHandler = (e) => {
@@ -48,6 +49,7 @@ const DocAttach = () => {
       <input
         type="file"
         hidden
+        multiple
         ref={inputRef}
         accept={ALLOWED_DOC_TYPES.join(', ')}
         onChange={docHandler}

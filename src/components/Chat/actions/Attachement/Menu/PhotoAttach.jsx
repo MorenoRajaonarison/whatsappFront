@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { PhotoIcon } from "../../../../../svg";
 import { addFiles } from "../../../../../features/chatSlice";
+import { filesType } from "../../../../../utils/filesType";
 
 const MAX_MEDIA_SIZE = 1024 * 1024 * 5; // 5MB
 const ALLOWED_MEDIA_TYPES = [
@@ -25,8 +26,7 @@ const PhotoAttach = () => {
   };
 
   const handleMediaRead = (media, result) => {
-    const mediaType = media.type.startsWith("image/") ? "image" : "video";
-    dispatch(addFiles({ file: media, mediaData: result, type: mediaType }));
+    dispatch(addFiles({ file: media, mediaData: result, type: filesType(media) }));
   };
 
   const mediaHandler = (e) => {
@@ -51,6 +51,7 @@ const PhotoAttach = () => {
       <input
         type="file"
         hidden
+        multiple
         ref={inputRef}
         accept={ALLOWED_MEDIA_TYPES.join(", ")}
         onChange={mediaHandler}
