@@ -1,10 +1,11 @@
-import React from "react";
+import {useState} from "react";
 import Header from "./Header";
 import FileViewer from "./FileViewer";
 import HandleAndSend from "./HandleAndSend";
 import Input from "./Input";
 
 const FilePreview = () => {
+  const [message, setMessage] = useState("");
   return (
     <div className="relatibe py-2 w-full flex items-center justify-center">
       {/* container */}
@@ -15,7 +16,7 @@ const FilePreview = () => {
         <FileViewer />
         <div className="w-full flex flex-col items-center">
           {/* message input */}
-          <Input />
+          <Input message={message} setMessage={setMessage}/>
           {/* send and manipulate files */}
           <HandleAndSend />
         </div>
