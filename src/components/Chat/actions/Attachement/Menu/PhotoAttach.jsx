@@ -26,7 +26,7 @@ const PhotoAttach = () => {
   };
 
   const handleMediaRead = (media, result) => {
-    dispatch(addFiles({ file: media, mediaData: result, type: filesType(media) }));
+    dispatch(addFiles({ file: media, fileData: result, type: filesType(media) }));
   };
 
   const mediaHandler = (e) => {

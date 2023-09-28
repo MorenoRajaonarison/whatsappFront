@@ -24,8 +24,7 @@ const DocAttach = () => {
   };
 
   const handleDocRead = (doc, result) => {
-    console.log(filesType(doc));
-    dispatch(addFiles({ file: doc, docData: result, type: filesType(doc) }));
+    dispatch(addFiles({ file: doc, fileData: result, type: filesType(doc) }));
   };
 
   const docHandler = (e) => {

@@ -1,11 +1,45 @@
-import React from 'react';
+import { useSelector } from "react-redux";
+import Add from "./Add";
+import { SendIcon } from "../../../../svg";
 
-const HandleAndSend = () => {
+const HandleAndSend = ({ setActiveIndex, activeIndex }) => {
+  const { files } = useSelector((state) => state.chat);
   return (
-    <div>
-      
+    <div className="w-[97%] flex items-center justify-between mt-2 border-t dark:border-dark_border_2 ">
+      <span></span>
+      <div className="flex gap-x-2">
+        {files.map((file, i) => (
+          <div
+            key={i}
+            className={`w-14 h-14 border dark:border-white rounded-md overflow-hidden cursor-pointer mt-2 ${
+              activeIndex === i && "border-[3px] !border-green_1"
+            }`}
+            onClick={() => setActiveIndex(i)}
+          >
+            {file.type === "IMAGE" ? (
+              <img
+                src={file.fileData}
+                className="w-full h-full object-cover"
+                alt=""
+              />
+            ) : (
+              <img
+                src={`../../../../images/files/${file.type}.png`}
+                className="w-8 h-8 mt-1"
+                alt=""
+              />
+            )}
+          </div>
+        ))}
+        {/* add another file */}
+        <Add setActiveIndex={setActiveIndex} />
+      </div>
+      {/* send btn */}
+      <div className="bg-green_1 w-16 h-16 mt-2 rounded-full flex items-center justify-center cursor-pointer">
+        <SendIcon className="fill-white" />
+      </div>
     </div>
   );
-}
+};
 
 export default HandleAndSend;
