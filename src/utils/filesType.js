@@ -1,5 +1,5 @@
-export function filesType(type) {
-  switch (type) {
+export function filesType(doc) {
+  switch (doc.type) {
     case "text/plain":
       return "TXT";
     case "application/pdf":
@@ -9,9 +9,8 @@ export function filesType(type) {
     case "application/vnd.openxmlformats-officedocument.presentationml.presentation":
       return "PPTX";
     case "application/vnd.ms-excel":
-      return "XLS";
     case "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
-      return "XLSX";
+      return "XLS";
     case "application/x-rar-compressed":
       return "RAR";
     case "application/zip":

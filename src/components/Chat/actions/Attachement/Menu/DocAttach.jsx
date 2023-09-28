@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
-import { DocumentIcon} from "../../../../../svg";
+import { DocumentIcon } from "../../../../../svg";
 import { addFiles } from "../../../../../features/chatSlice";
 import { filesType } from "../../../../../utils/filesType";
 
@@ -12,7 +12,7 @@ const ALLOWED_DOC_TYPES = [
   "application/pdf",
   "text/plain", // .txt
   "application/zip", // .zip
-  "application/x-rar-compressed" // .rar
+  "application/x-rar-compressed", // .rar
 ];
 
 const DocAttach = () => {
@@ -24,6 +24,7 @@ const DocAttach = () => {
   };
 
   const handleDocRead = (doc, result) => {
+    console.log(filesType(doc));
     dispatch(addFiles({ file: doc, docData: result, type: filesType(doc) }));
   };
 
@@ -33,7 +34,7 @@ const DocAttach = () => {
     selectedDocs.forEach((doc) => {
       const reader = new FileReader();
       reader.readAsDataURL(doc);
-      reader.onload = e => handleDocRead(doc, e.target.result);
+      reader.onload = (e) => handleDocRead(doc, e.target.result);
     });
   };
 
@@ -44,14 +45,14 @@ const DocAttach = () => {
         className="bg-[#bf59cf] rounded-full"
         onClick={() => inputRef.current.click()}
       >
-        <DocumentIcon/>
+        <DocumentIcon />
       </button>
       <input
         type="file"
         hidden
         multiple
         ref={inputRef}
-        accept={ALLOWED_DOC_TYPES.join(', ')}
+        accept={ALLOWED_DOC_TYPES.join(", ")}
         onChange={docHandler}
       />
     </li>
