@@ -9,7 +9,7 @@ const FileViewer = ({ activeIndex }) => {
         {files[activeIndex].type === "IMAGE" ? (
           <img
             src={files[activeIndex].fileData}
-            classNmae="max-w-[80%] object-contain hview"
+            className="max-w-[80%] object-contain hview"
             alt=""
           />
         ) : (
