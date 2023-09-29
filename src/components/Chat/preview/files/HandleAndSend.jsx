@@ -7,7 +7,7 @@ const HandleAndSend = ({ setActiveIndex, activeIndex }) => {
   return (
     <div className="w-[97%] flex items-center justify-between mt-2 border-t dark:border-dark_border_2 ">
       <span></span>
-      <div className="flex gap-x-2">
+      <div className="flex gap-x-2 items-center">
         {files.map((file, i) => (
           <div
             key={i}
