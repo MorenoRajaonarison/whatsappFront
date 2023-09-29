@@ -11,7 +11,7 @@ const Attachement = ({ setShowAttachment, showAttachment, setShowPicker }) => {
         className="btn"
         onClick={() => {
           setShowPicker(false);
-          setShowAttachment(!show);
+          setShowAttachment(!showAttachment);
         }}
       >
         <AttachmentIcon className="dark:fill-dark_svg_1" />
