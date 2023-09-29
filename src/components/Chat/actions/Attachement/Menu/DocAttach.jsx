@@ -2,25 +2,18 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { DocumentIcon } from "../../../../../svg";
 import { addFiles } from "../../../../../features/chatSlice";
-import { filesType } from "../../../../../utils/filesType";
-
-const MAX_DOC_SIZE = 1024 * 1024 * 10; // 10MB
-const ALLOWED_DOC_TYPES = [
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
-  "application/vnd.ms-excel", // .xls
-  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
-  "application/pdf",
-  "text/plain", // .txt
-  "application/zip", // .zip
-  "application/x-rar-compressed", // .rar
-];
+import {
+  ALLOWED_DOC_TYPES,
+  MAX_FILE_SIZE,
+  filesType,
+} from "../../../../../utils/filesType";
 
 const DocAttach = () => {
   const dispatch = useDispatch();
   const inputRef = useRef(null);
 
   const isValidDoc = (doc) => {
-    return ALLOWED_DOC_TYPES.includes(doc.type) && doc.size <= MAX_DOC_SIZE;
+    return ALLOWED_DOC_TYPES.includes(doc.type) && doc.size <= MAX_FILE_SIZE;
   };
 
   const handleDocRead = (doc, result) => {

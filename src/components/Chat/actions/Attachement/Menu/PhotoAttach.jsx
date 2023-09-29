@@ -2,18 +2,8 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { PhotoIcon } from "../../../../../svg";
 import { addFiles } from "../../../../../features/chatSlice";
-import { filesType } from "../../../../../utils/filesType";
+import { ALLOWED_MEDIA_TYPES, MAX_FILE_SIZE, filesType } from "../../../../../utils/filesType";
 
-const MAX_MEDIA_SIZE = 1024 * 1024 * 5; // 5MB
-const ALLOWED_MEDIA_TYPES = [
-  "image/png",
-  "image/jpeg",
-  "image/gif",
-  "image/webp",
-  "video/mp4",
-  "video/mpg",
-  "video/webm",
-];
 
 const PhotoAttach = () => {
   const dispatch = useDispatch();
@@ -21,7 +11,7 @@ const PhotoAttach = () => {
 
   const isValidMedia = (media) => {
     return (
-      ALLOWED_MEDIA_TYPES.includes(media.type) && media.size <= MAX_MEDIA_SIZE
+      ALLOWED_MEDIA_TYPES.includes(media.type) && media.size <= MAX_FILE_SIZE
     );
   };
 

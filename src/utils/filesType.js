@@ -31,3 +31,24 @@ export function filesType(doc) {
       return "IMAGE";
   }
 }
+
+export const MAX_FILE_SIZE = 1024 * 1024 * 10; // 10MB
+export const ALLOWED_DOC_TYPES = [
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document", // .docx
+  "application/vnd.ms-excel", // .xls
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", // .xlsx
+  "application/pdf",
+  "text/plain", // .txt
+  "application/zip", // .zip
+  "application/x-rar-compressed", // .rar
+];
+
+export const ALLOWED_MEDIA_TYPES = [
+  "image/png",
+  "image/jpeg",
+  "image/gif",
+  "image/webp",
+  "video/mp4",
+  "video/mpg",
+  "video/webm",
+];
