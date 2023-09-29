@@ -48,6 +48,10 @@
   .translate-y-minus-50 {
     transform: translateY(-70%);
   }
+
+  .fileThumb:hover .removeFileIcon {
+    display: block;
+  }
 }
 
 /* animation */

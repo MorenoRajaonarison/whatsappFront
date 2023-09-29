@@ -1,14 +1,15 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import Add from "./Add";
-import { SendIcon } from "../../../../svg";
+import { CloseIcon, SendIcon } from "../../../../svg";
 import { uploadFiles } from "../../../../utils/upload";
-import { sendMessage } from "../../../../features/chatSlice";
+import { removeFileFormFiles, sendMessage } from "../../../../features/chatSlice";
 import { useSocket } from "../../../../context/socketContext";
+import { ClipLoader } from "react-spinners";
 
 const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
-  const dispatch = useDispatch()
-  const socket = useSocket()
+  const dispatch = useDispatch();
+  const socket = useSocket();
   const { files, activeConversation } = useSelector((state) => state.chat);
   const { user } = useSelector((state) => state.user);
   const [loading, setLoading] = useState(false);
@@ -23,12 +24,16 @@ const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
       token: user.access_token,
       message,
       convoId: activeConversation._id,
-      files: uploadedFiles.length>0 ? uploadedFiles: [],
+      files: uploadedFiles.length > 0 ? uploadedFiles : [],
     };
-    let newMsg = await dispatch(sendMessage(values))
-    socket.emit("sendMessage", newMsg.payload)
-    setLoading(false)
+    let newMsg = await dispatch(sendMessage(values));
+    socket.emit("sendMessage", newMsg.payload);
+    setLoading(false);
   };
+
+  const  handleRemoveFile = (index) => {
+    dispatch(removeFileFormFiles(index))
+  }
 
   return (
     <div className="w-[97%] flex items-center justify-between mt-2 border-t dark:border-dark_border_2 ">
@@ -37,7 +42,7 @@ const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
         {files.map((file, i) => (
           <div
             key={i}
-            className={`w-14 h-14 border dark:border-white rounded-md overflow-hidden cursor-pointer mt-2 ${
+            className={`fileThumb relative w-14 h-14 border dark:border-white rounded-md overflow-hidden cursor-pointer mt-2 ${
               activeIndex === i && "border-[3px] !border-green_1"
             }`}
             onClick={() => setActiveIndex(i)}
@@ -55,6 +60,10 @@ const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
                 alt=""
               />
             )}
+            {/* remove file icon */}
+            <div className="removeFileIcon hidden" onClick={() => handleRemoveFile(i)}>
+              <CloseIcon className="dark:fill-white absolute right-0 top-0 w-4 h-4" />
+            </div>
           </div>
         ))}
         {/* add another file */}
@@ -65,7 +74,11 @@ const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
         onClick={sendMsgHandler}
         className="bg-green_1 w-16 h-16 mt-2 rounded-full flex items-center justify-center cursor-pointer"
       >
-        <SendIcon className="fill-white" />
+        {loading ? (
+          <ClipLoader color="#e9edef" size={25} />
+        ) : (
+          <SendIcon className="fill-white" />
+        )}
       </div>
     </div>
   );

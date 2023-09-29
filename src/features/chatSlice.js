@@ -117,6 +117,12 @@ export const chatSlice = createSlice({
     clearFiles: (state, action) => {
       state.files = [];
     },
+    removeFileFormFiles: (state, action) => {
+      let index = action.payload
+      let files = [...state.files]
+      let fileToRemove = files[index]
+      state.files = files.filter((file) => file !== fileToRemove)
+    }
   },
   extraReducers(builder) {
     builder
@@ -178,7 +184,7 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setActiveConversation, updateMessages, addFiles, clearFiles } =
+export const { setActiveConversation, updateMessages, addFiles, clearFiles, removeFileFormFiles } =
   chatSlice.actions;
 
 export default chatSlice.reducer;
