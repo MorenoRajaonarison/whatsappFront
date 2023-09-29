@@ -21,6 +21,7 @@ const FilePreview = () => {
           <Input message={message} setMessage={setMessage} />
           {/* send and manipulate files */}
           <HandleAndSend
+            message={message}
             activeIndex={activeIndex}
             setActiveIndex={setActiveIndex}
           />

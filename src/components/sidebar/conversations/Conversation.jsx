@@ -8,7 +8,6 @@ import { dateHandler } from "../../../utils/date";
 import { useDispatch, useSelector } from "react-redux";
 import { capitalize } from "../../../utils/string";
 import { useSocket } from "../../../context/socketContext";
-import Typing from "../../Chat/messages/Typing";
 
 const Conversation = ({ convo, online, typing }) => {
   const dispatch = useDispatch();
