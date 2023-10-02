@@ -1,7 +1,8 @@
 import { useSelector } from "react-redux";
 import { useRef, useEffect } from "react";
 import Message from "./Message";
-import Typing from './Typing'
+import Typing from "./Typing";
+import FileMsg from "./Files/FileMsg";
 
 const ChatMessages = ({ typing }) => {
   const { messages, activeConversation } = useSelector((state) => state.chat);
@@ -19,13 +20,28 @@ const ChatMessages = ({ typing }) => {
         {/* messages */}
         {messages &&
           messages.map((msg) => (
-            <Message
-              message={msg}
-              key={msg._id}
-              me={user._id === msg.sender._id}
-            />
+            <>
+              {/* msg files  */}
+              {msg.files.length > 0 &&
+                msg.files.map((file) => (
+                  <FileMsg
+                    fileMsg={file}
+                    message={msg}
+                    key={msg._id}
+                    me={user._id === msg.sender._id}
+                  />
+                ))}
+              {/* msg text */}
+              {msg.message.length > 0 ? (
+                <Message
+                  message={msg}
+                  key={msg._id}
+                  me={user._id === msg.sender._id}
+                />
+              ) : null}
+            </>
           ))}
-        {typing === activeConversation._id && <Typing/>}
+        {typing === activeConversation._id && <Typing />}
         <div ref={endRef}></div>
       </div>
     </div>
