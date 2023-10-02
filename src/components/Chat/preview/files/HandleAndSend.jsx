@@ -3,7 +3,10 @@ import { useState } from "react";
 import Add from "./Add";
 import { CloseIcon, SendIcon } from "../../../../svg";
 import { uploadFiles } from "../../../../utils/upload";
-import { removeFileFormFiles, sendMessage } from "../../../../features/chatSlice";
+import {
+  removeFileFormFiles,
+  sendMessage,
+} from "../../../../features/chatSlice";
 import { useSocket } from "../../../../context/socketContext";
 import { ClipLoader } from "react-spinners";
 
@@ -31,9 +34,9 @@ const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
     setLoading(false);
   };
 
-  const  handleRemoveFile = (index) => {
-    dispatch(removeFileFormFiles(index))
-  }
+  const handleRemoveFile = (index) => {
+    dispatch(removeFileFormFiles(index));
+  };
 
   return (
     <div className="w-[97%] flex items-center justify-between mt-2 border-t dark:border-dark_border_2 ">
@@ -53,6 +56,8 @@ const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
                 className="w-full h-full object-cover"
                 alt=""
               />
+            ) : file.type === "VIDEO" ? (
+              <video src={file.fileData}></video>
             ) : (
               <img
                 src={`../../../../images/files/${file.type}.png`}
@@ -61,7 +66,10 @@ const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
               />
             )}
             {/* remove file icon */}
-            <div className="removeFileIcon hidden" onClick={() => handleRemoveFile(i)}>
+            <div
+              className="removeFileIcon hidden"
+              onClick={() => handleRemoveFile(i)}
+            >
               <CloseIcon className="dark:fill-white absolute right-0 top-0 w-4 h-4" />
             </div>
           </div>
