@@ -1,6 +1,7 @@
 import moment from "moment";
 import React from "react";
 import FileImgVideo from "./FileImgVideo";
+import FileOther from "./FileOther";
 
 const FileMsg = ({ fileMsg, me, message }) => {
   const { file, type } = fileMsg;
@@ -15,14 +16,20 @@ const FileMsg = ({ fileMsg, me, message }) => {
         <div
           className={`relative h-full dark:text-dark_text_1 rounded-lg ${
             me ? "border-[3px] border-green_3" : "dark:bg-dark_bg_2"
+          } ${
+            me && file.public_id.split(".")[1] === "png"
+              ? "bg-white"
+              : "bg-green_3"
           }`}
         >
           {/* message */}
-          <p className=" h-full text-sm">
+          <p
+            className={`h-full text-sm ${(type !== "IMAGE" && type !== "VIDEO") && "pb-4"}`}
+          >
             {type === "IMAGE" || type === "VIDEO" ? (
               <FileImgVideo url={file.secure_url} type={type} />
             ) : (
-              ""
+              <FileOther file={file} type={type} />
             )}
           </p>
           {/* date */}
