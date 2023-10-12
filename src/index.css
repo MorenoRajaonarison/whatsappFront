@@ -126,6 +126,12 @@
   color: #fff !important;
 }
 
+#react-select-1-input,
+#react-select-2-input,
+#react-select-3-input {
+  color: #fff !important;
+}
+
 .css-1mndiq5-menu {
   background: transparent !important;
   color: hsl(0, 0%, 100%) !important;

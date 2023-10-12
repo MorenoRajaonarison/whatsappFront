@@ -7,6 +7,7 @@ import CreateGrp from "../createGrp/CreateGrp";
 const SidebarHeader = () => {
   const { user } = useSelector((state) => state.user);
   const [showMenu, setShowMenu] = useState(false);
+  const [showCreateGrp, setShowCreateGrp] = useState(false);
 
   return (
     <>
@@ -42,13 +43,13 @@ const SidebarHeader = () => {
               <button className={`btn ${showMenu ? "bg-dark_hover_1" : ""}`}>
                 <DotsIcon className="dark:fill-dark_svg_1" />
               </button>
-              {showMenu ? <Menu /> : null}
+              {showMenu ? <Menu setShowCreateGrp={setShowCreateGrp} /> : null}
             </li>
           </ul>
         </div>
       </div>
       {/* create Grp */}
-      <CreateGrp />
+      {showCreateGrp && <CreateGrp setShowCreateGrp={setShowCreateGrp} />}
     </>
   );
 };
