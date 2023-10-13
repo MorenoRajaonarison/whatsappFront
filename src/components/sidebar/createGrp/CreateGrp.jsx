@@ -60,6 +60,7 @@ const CreateGrp = ({ setShowCreateGrp }) => {
         token: user.access_token,
       };
       let newConvo = dispatch(createGrpConvo(values));
+      setShowCreateGrp(false);
     }
   };
   return (

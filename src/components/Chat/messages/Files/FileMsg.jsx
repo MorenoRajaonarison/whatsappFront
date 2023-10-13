@@ -12,7 +12,17 @@ const FileMsg = ({ fileMsg, me, message }) => {
       }`}
     >
       {/* message container */}
-      <div className="">
+      <div className="relative">
+        {/* sender user msg */}
+        {!me && message.conversation.isGroup && (
+          <div className="absolute top-0.5 left-[-37px]">
+            <img
+              src={message.sender.picture}
+              alt=""
+              className="w-8 h-8 rounded-full"
+            />
+          </div>
+        )}
         <div
           className={`relative h-full dark:text-dark_text_1 rounded-lg ${
             me ? "border-[3px] border-green_3" : "dark:bg-dark_bg_2"
@@ -24,7 +34,9 @@ const FileMsg = ({ fileMsg, me, message }) => {
         >
           {/* message */}
           <p
-            className={`h-full text-sm ${(type !== "IMAGE" && type !== "VIDEO") && "pb-4"}`}
+            className={`h-full text-sm ${
+              type !== "IMAGE" && type !== "VIDEO" && "pb-4"
+            }`}
           >
             {type === "IMAGE" || type === "VIDEO" ? (
               <FileImgVideo url={file.secure_url} type={type} />

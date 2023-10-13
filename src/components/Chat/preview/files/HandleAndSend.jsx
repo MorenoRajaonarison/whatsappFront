@@ -10,7 +10,12 @@ import {
 import { useSocket } from "../../../../context/socketContext";
 import { ClipLoader } from "react-spinners";
 
-const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
+const HandleAndSend = ({
+  setActiveIndex,
+  activeIndex,
+  message,
+  clearFileHandler,
+}) => {
   const dispatch = useDispatch();
   const socket = useSocket();
   const { files, activeConversation } = useSelector((state) => state.chat);
@@ -32,6 +37,7 @@ const HandleAndSend = ({ setActiveIndex, activeIndex, message }) => {
     let newMsg = await dispatch(sendMessage(values));
     socket.emit("sendMessage", newMsg.payload);
     setLoading(false);
+    clearFileHandler();
   };
 
   const handleRemoveFile = (index) => {
