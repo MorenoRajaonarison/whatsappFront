@@ -12,9 +12,18 @@ const Conversations = ({ onlineUsers, typing }) => {
       <ul>
         {conversations &&
           conversations
-            .filter((c) => c.latestMessage || c._id === activeConversation._id)
+            .filter(
+              (c) =>
+                c.latestMessage ||
+                c._id === activeConversation._id ||
+                c.isGroup == true
+            )
             .map((conversation) => {
-              let check = checkOnlineStatus(onlineUsers, user, conversation.users);
+              let check = checkOnlineStatus(
+                onlineUsers,
+                user,
+                conversation.users
+              );
               return (
                 <Conversation
                   convo={conversation}

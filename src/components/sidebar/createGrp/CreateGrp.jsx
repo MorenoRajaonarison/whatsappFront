@@ -1,11 +1,13 @@
 import { useState } from "react";
 import UnderlineInput from "./UnderlineInput";
 import MultiSelect from "./MultiSelect";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
+import { createGrpConvo } from "../../../features/chatSlice";
 
 const CreateGrp = ({ setShowCreateGrp }) => {
+  const dispatch = useDispatch();
   const [name, setName] = useState("");
   const [searchResults, setsearchResults] = useState([]);
   const [selectedUsers, setselectedUsers] = useState([]);
@@ -45,7 +47,21 @@ const CreateGrp = ({ setShowCreateGrp }) => {
       setsearchResults([]);
     }
   };
-  console.log({ selectedUsers });
+
+  const createGrpHandler = async () => {
+    if (status !== "loading") {
+      let users = [];
+      selectedUsers.forEach((u) => {
+        users.push(u.value);
+      });
+      let values = {
+        name,
+        users,
+        token: user.access_token,
+      };
+      let newConvo = dispatch(createGrpConvo(values));
+    }
+  };
   return (
     <div className="createGroupAnimation relative flex0030 h-full z-40">
       {/* container */}
@@ -66,7 +82,10 @@ const CreateGrp = ({ setShowCreateGrp }) => {
           handleSearch={handleSearch}
         />
         <div className="absolute bottom-1/3 left-1/2 -translate-x-1/2">
-          <button className="btn bg-green_1 scale-150 hover:bg-green-500">
+          <button
+            className="btn bg-green_1 scale-150 hover:bg-green-500"
+            onClick={() => createGrpHandler()}
+          >
             {status === "loading" ? (
               <ClipLoader color="#e9efef" size={25} />
             ) : (

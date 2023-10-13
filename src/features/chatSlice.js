@@ -51,6 +51,27 @@ export const openCreateConversation = createAsyncThunk(
   }
 );
 
+export const createGrpConvo = createAsyncThunk(
+  "conversation/createGrp",
+  async (values, { rejectWithValue }) => {
+    const { token, name, users } = values;
+    try {
+      const { data } = await axios.post(
+        `${CONVERSATION_ENDPOINT}/group`,
+        { name, users },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.response.data.error.message);
+    }
+  }
+);
+
 export const getConversationMessages = createAsyncThunk(
   "conversation/messages",
   async (values, { rejectWithValue }) => {
@@ -118,11 +139,11 @@ export const chatSlice = createSlice({
       state.files = [];
     },
     removeFileFormFiles: (state, action) => {
-      let index = action.payload
-      let files = [...state.files]
-      let fileToRemove = files[index]
-      state.files = files.filter((file) => file !== fileToRemove)
-    }
+      let index = action.payload;
+      let files = [...state.files];
+      let fileToRemove = files[index];
+      state.files = files.filter((file) => file !== fileToRemove);
+    },
   },
   extraReducers(builder) {
     builder
@@ -184,7 +205,12 @@ export const chatSlice = createSlice({
   },
 });
 
-export const { setActiveConversation, updateMessages, addFiles, clearFiles, removeFileFormFiles } =
-  chatSlice.actions;
+export const {
+  setActiveConversation,
+  updateMessages,
+  addFiles,
+  clearFiles,
+  removeFileFormFiles,
+} = chatSlice.actions;
 
 export default chatSlice.reducer;
