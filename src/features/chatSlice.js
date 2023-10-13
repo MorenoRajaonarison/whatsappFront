@@ -33,11 +33,11 @@ export const getConversations = createAsyncThunk(
 export const openCreateConversation = createAsyncThunk(
   "conversation/openCreate",
   async (values, { rejectWithValue }) => {
-    const { token, receiverId } = values;
+    const { token, receiverId, convoId } = values;
     try {
       const { data } = await axios.post(
         CONVERSATION_ENDPOINT,
-        { receiverId },
+        { receiverId, convoId }, // Ajoutez l'identifiant de la conversation ici
         {
           headers: {
             Authorization: `Bearer ${token}`,

@@ -1,10 +1,12 @@
 import { useSelector } from "react-redux";
 import { DotsIcon, SearchLargeIcon } from "../../../svg";
 import { capitalize } from "../../../utils/string";
+import { getConversationPicture } from "../../../utils/chat";
 
 const ChatHeader = ({ online }) => {
+  const { user } = useSelector((state) => state.user);
   const { activeConversation } = useSelector((state) => state.chat);
-  const { name, picture } = activeConversation;
+  const { name, picture, isGroup } = activeConversation;
   return (
     <div className="h-[59px] dark:bg-dark_bg_2 flex items-center p16 select-none">
       {/* container */}
@@ -13,8 +15,13 @@ const ChatHeader = ({ online }) => {
         <div className="flex items-center gap-x-4">
           <button className="btn">
             <img
-              src={picture}
+              src={
+                isGroup
+                  ? picture
+                  : getConversationPicture(user, activeConversation.users)
+              }
               className="w-full h-full rounded-full object-cover"
+              alt=""
             />
           </button>
           {/* name and status online */}

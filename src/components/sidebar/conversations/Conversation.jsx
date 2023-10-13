@@ -16,6 +16,8 @@ const Conversation = ({ convo, online, typing }) => {
   const { activeConversation } = useSelector((state) => state.chat);
   const values = {
     receiverId: getConversationId(user, convo.users),
+    isGroup: convo.isGroup ? convo._id : false,
+    convoId: convo._id,
     token: user.access_token,
   };
   const openConversation = async () => {
