@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { ClipLoader } from "react-spinners";
 import { createGrpConvo } from "../../../features/chatSlice";
+import { ArrowBack, Done } from "@mui/icons-material";
 
 const CreateGrp = ({ setShowCreateGrp }) => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ const CreateGrp = ({ setShowCreateGrp }) => {
         users,
         token: user.access_token,
       };
-      let newConvo = dispatch(createGrpConvo(values));
+      dispatch(createGrpConvo(values));
       setShowCreateGrp(false);
     }
   };
@@ -71,7 +72,7 @@ const CreateGrp = ({ setShowCreateGrp }) => {
           className="btn w-6 h-6 border"
           onClick={() => setShowCreateGrp(false)}
         >
-          🙂
+          <ArrowBack sx={{ color: "#fff" }} />
         </button>
         {/* grp name input */}
         <UnderlineInput name={name} setName={setName} />
@@ -90,7 +91,7 @@ const CreateGrp = ({ setShowCreateGrp }) => {
             {status === "loading" ? (
               <ClipLoader color="#e9efef" size={25} />
             ) : (
-              "😄"
+              <Done />
             )}
           </button>
         </div>
