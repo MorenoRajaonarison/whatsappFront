@@ -59,6 +59,10 @@ Start the server
 
 **Server:** Node, Express, Socket.io
 
+## Preview
+
+![Capture.png](./Preview.PNG)
+
 ## Authors
 
 - [@Rajaonarison](https://www.github.com/octokatherine)
